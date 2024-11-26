@@ -13,16 +13,16 @@
 
 ### Getting Started
 
-Clone the repository
+$ Clone the repository
 
 ```bash
-git clone https://github.com/Lobo-rio/second-python-api.git
+$ git clone https://github.com/Lobo-rio/second-python-api.git
 ```
 
 Access the folder
 
 ```bash
-cd second-python-api
+$ cd second-python-api
 ```
 
 ### Python Pre requisites
@@ -30,34 +30,34 @@ cd second-python-api
 Create a virtual environment
 
 ```bash
-python -m venv venv
-. venv/bin/activate
+$ python -m venv venv
+$ . venv/bin/activate
 ```
 
 Install dependencies
 
 ```bash
-pip install flask==2.0.3
-pip install flask_restx==1.3.0
-pip install Werkzeug==2.0.3
-pip install Flask-SQLAlchemy==2.5.1
-pip install SQLAlchemy==1.4.25
+$ pip install flask==2.0.3
+$ pip install flask_restx==1.3.0
+$ pip install Werkzeug==2.0.3
+$ pip install Flask-SQLAlchemy==2.5.1
+$ pip install SQLAlchemy==1.4.25
 ```
 
 Keep the dependencies informed, in case there are any different ones:
 
 ```bash
-pip install --upgrade Flask==2.0.3
-pip install --upgrade flask_restx==1.3.0
-pip install --upgrade Werkzeug==2.0.3
-pip install --upgrade Flask-SQLAlchemy==2.5.1
-pip install --upgrade SQLAlchemy==1.4.25
+$ pip install --upgrade Flask==2.0.3
+$ pip install --upgrade flask_restx==1.3.0
+$ pip install --upgrade Werkzeug==2.0.3
+$ pip install --upgrade Flask-SQLAlchemy==2.5.1
+$ pip install --upgrade SQLAlchemy==1.4.25
 ```
 
 To get started with this template, simply paste this command into your terminal:
 
 ```bash
-python src/main.py
+$ python src/main.py
 ```
 
 ## Swagger API
