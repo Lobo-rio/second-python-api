@@ -31,6 +31,7 @@ Create a virtual environment
 
 ```bash
 python -m venv venv
+. venv/bin/activate
 ```
 
 Install dependencies
