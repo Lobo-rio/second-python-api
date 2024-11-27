@@ -10,7 +10,7 @@ app, api = server.app, server.api
 usersNS = api.namespace('users', description='Users operations')
 
 @usersNS.route('/', endpoint='Users')
-class BookList(Resource):
+class UserList(Resource):
     @usersNS.doc('list_users')
     @usersNS.marshal_list_with(model_users)
     def get(self):
@@ -18,9 +18,8 @@ class BookList(Resource):
     
         return [user.to_dict() for user in users]
     
-    @usersNS.doc('create_book')
+    @usersNS.doc('create_user')
     @usersNS.expect(model_users)
-    @usersNS.marshal_with(model_users, code=201)
     def post(self):
         name = request.json['name']
         email = request.json['email']
@@ -28,7 +27,7 @@ class BookList(Resource):
 
         user_existed = Users.query.filter_by(email = email).first()
         if user_existed:
-            return jsonify({'error': 'User already exists!'}), 400
+            return {'error': 'User already exists!'}, 400
     
         user = Users(name=name, email=email, phone=phone)
         db.session.add(user)
@@ -37,37 +36,35 @@ class BookList(Resource):
         return user.to_dict(), 201
     
 @usersNS.route('/<int:id>')
-@usersNS.response(404, 'Book not found')
-@usersNS.param('id', 'The book identifier')
-class Book(Resource):
-    @usersNS.doc('get_book')
-    @usersNS.marshal_with(model_users)
+@usersNS.response(404, 'User not found')
+@usersNS.param('id', 'The user identifier')
+class User(Resource):
+    @usersNS.doc('get_user')
     def get(self, id):
         user_existed = Users.query.get(id)
         if not user_existed:
-            return jsonify({'error': 'User does not exist!'}), 404
+            return {'error': 'User does not exist!'}, 404
     
         return user_existed.to_dict(), 200
 
-    @usersNS.doc('delete_book')
-    @usersNS.response(204, 'Book deleted')
+    @usersNS.doc('delete_user')
+    @usersNS.response(204, 'User deleted')
     def delete(self, id):
         user_existed = Users.query.get(id)
         if not user_existed:
-            return jsonify({'error': 'User does not exist!'}), 404
+            return {'error': 'User does not exist!'}, 404
     
         db.session.delete(user_existed)
         db.session.commit()
 
         return '', 204
 
-    @usersNS.doc('update_book')
+    @usersNS.doc('update_user')
     @usersNS.expect(model_users)
-    @usersNS.marshal_with(model_users)
     def put(self, id):
         user_existed = Users.query.get(id)
         if not user_existed:
-            return jsonify({'error': 'User does not exist!'}), 404
+            return {'error': 'User does not exist!'}, 404
     
         user_existed.name = request.json['name']
         user_existed.email = request.json['email']
