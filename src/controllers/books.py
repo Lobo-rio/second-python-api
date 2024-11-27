@@ -20,7 +20,6 @@ class BookList(Resource):
     
     @booksNS.doc('create_book')
     @booksNS.expect(model_books)
-    @booksNS.marshal_list_with(model_books)
     def post(self):
         title = request.json['title']
         author = request.json['author']
@@ -28,7 +27,7 @@ class BookList(Resource):
 
         book_existed = Books.query.filter_by(title = title).first()
         if book_existed:
-            return jsonify({'error': 'Book already exists!'}), 400
+            return {'error': 'Book already exists!'}, 400
     
         book = Books(title=title, author=author, description=description)
         db.session.add(book)
@@ -41,11 +40,10 @@ class BookList(Resource):
 @booksNS.param('id', 'The book identifier')
 class Book(Resource):
     @booksNS.doc('get_book')
-    @booksNS.marshal_with(model_books)
     def get(self, id):
         book_existed = Books.query.get(id)
         if not book_existed:
-            return jsonify({'error': 'Book does not exist!'}), 404
+            return {'error': 'Book does not exist!'}, 404
     
         return book_existed.to_dict(), 200
 
@@ -54,7 +52,7 @@ class Book(Resource):
     def delete(self, id):
         book_existed = Books.query.get(id)
         if not book_existed:
-            return jsonify({'error': 'Book does not exist!'}), 404
+            return {'error': 'Book does not exist!'}, 404
     
         db.session.delete(book_existed)
         db.session.commit()
@@ -63,11 +61,10 @@ class Book(Resource):
 
     @booksNS.doc('update_book')
     @booksNS.expect(model_books)
-    @booksNS.marshal_with(model_books)
     def put(self, id):
         book_existed = Books.query.get(id)
         if not book_existed:
-            return jsonify({'error': 'Book does not exist!'}), 404
+            return {'error': 'Book does not exist!'}, 404
     
         book_existed.title = request.json['title']
         book_existed.author = request.json['author']
